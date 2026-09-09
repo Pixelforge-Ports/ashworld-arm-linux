@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gameList>
+  <game>
+    <path>./Ashworld.sh</path>
+    <name>Ashworld (experimental)</name>
+    <desc>Experimental ARM64 Linux adaptation using the owner's unchanged Windows game JAR. Requires PortMaster, Java 17 and Westonpack. Physical handheld compatibility needs testing.</desc>
+    <genre>Action</genre>
+    <players>1</players>
+  </game>
+</gameList>

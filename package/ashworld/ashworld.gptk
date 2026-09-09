@@ -1,0 +1,19 @@
+# Ashworld's original keyboard controls.
+back = esc
+start = esc
+a = x
+b = z
+x = tab
+y = f
+up = up
+down = down
+left = left
+right = right
+l1 = f1
+r1 = z
+l2 = o
+r2 = x
+left_analog_up = up
+left_analog_down = down
+left_analog_left = left
+left_analog_right = right

@@ -1,0 +1,22 @@
+{
+  "version": 4,
+  "name": "ashworld.zip",
+  "items": ["Ashworld.sh", "ashworld"],
+  "items_opt": [],
+  "attr": {
+    "title": "Ashworld (experimental)",
+    "porter": [],
+    "desc": "Experimental desktop Java/libGDX adaptation for ARM64 Linux handhelds. Uses the owner's unchanged Windows game JAR, native ARM64 libraries, offline play and PortMaster keyboard controls. Hardware testing is required.",
+    "desc_md": null,
+    "inst": "Copy your supported Windows/GOG ashworld.dat to ashworld/ashworld.dat. No EXE, APK, conversion or asset extraction is needed. Install PortMaster's Westonpack and Java 17 runtimes. On muOS place ashworld in /ports and Ashworld.sh in /roms/PORTS. Other firmware normally keeps the script beside ashworld in its ports folder. Requires compatible 64-bit ARM firmware and graphics drivers.",
+    "inst_md": null,
+    "genres": ["action", "platformer"],
+    "image": null,
+    "rtr": false,
+    "exp": true,
+    "runtime": ["weston_pkg_0.2.squashfs", "zulu17.54.21-ca-jre17.0.13-linux.squashfs"],
+    "reqs": [],
+    "arch": ["aarch64"],
+    "min_glibc": "2.27"
+  }
+}

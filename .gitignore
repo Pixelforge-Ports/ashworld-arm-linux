@@ -1,0 +1,10 @@
+build/
+dist/
+package/ashworld/ashworld.dat
+package/ashworld/runtime/*.jar
+package/ashworld/saves/
+package/ashworld/cache/
+package/ashworld/resolution.txt
+package/ashworld/log.txt
+__pycache__/
+*.pyc
