@@ -1,51 +1,47 @@
-# Validation - Ashworld 0.1.0
+# Validation
 
-## Scope
+Porter: Pixelforge ports (Ronax)
 
-All 128 supplied input files were inventoried and a final SHA256 comparison confirmed they were unchanged. Every member of ashworld.dat (3,213 entries) and webcache.zip (9 entries) passed CRC inspection. Windows executables and installers were not run.
-
-Built with JDK 26 targeting Java 8 bytecode. Runtime tests use Windows Java 17.0.20.1, a 256 MB heap and SerialGC. These tests exercise the original game and desktop native libraries; they do not validate Linux ARM64 native loading or Weston/gl4es.
-
-## Runtime tests
-
-The input harness enters the title menu, generates the world, skips the intro with the original back key, moves and uses actions, advances the tutorial dialog and dismisses its map. Each completed resolution run must include at least 300 gameplay frames. It also asserts physical output dimensions, the actual GL viewport after every frame, elapsed time consistent with the 60 Hz update ceiling, and no logged runtime exceptions.
-
-Target matrix: 640x480, 720x480, 720x720, 1024x768 and 1280x720. Screenshots and class-load logs are under build/resolutions. Viewport checks verify centered 16:9 output rather than relying on the window dimensions alone. The host restores its graphics adapter every frame because Lwjgl3Window.makeCurrent resets Gdx graphics state.
-
-The save test uses Ashworld's own SaveGame/LoadGame methods, verifies the stored save's version, and a later process resumes the saved world through the normal continue menu. Settings and world saves use the desktop provider; the legacy libGDX preference fallback has a separate subfolder to avoid treating a settings directory as a file.
-
-Initial exploratory tests exposed a tutorial map that needed a back-button press, the per-frame graphics reset and the preference-directory conflict on restart. Those findings were fixed before the final checks. The initial 9,000-frame exploratory run had only 272 gameplay frames and is not counted as a completed matrix test.
-
-The data verifier was separately tested on a host-only classpath: it accepted the supplied ashworld.dat and rejected a deliberately unsupported test file before loading game classes.
-
-## Final results
-
-All five final runs passed without logged runtime exceptions. The actual GL viewport was checked on every frame; final framebuffer dimensions matched the requested screen size. Screenshots at 640x480, 720x720 and 1280x720 were visually reviewed.
-
-| Output | Render frames | Gameplay frames | Seconds |
-|---|---:|---:|---:|
-| 640x480 | 1750 | 300 | 32.03 |
-| 720x480 | 1750 | 300 | 31.63 |
-| 720x720 | 1750 | 300 | 31.60 |
-| 1024x768 | 1750 | 300 | 31.84 |
-| 1280x720 | 1750 | 300 | 31.63 |
-
-The final separate restart loaded the existing world through the continue menu, completed 300 gameplay frames and passed original save/readback verification in 12.58 seconds. No preference-directory warning remained.
-
-## Package checks
-
-Bash syntax and resolution helper tests cover the requested sizes, additional valid sizes, invalid input, config/environment precedence, CRLF config and automatic fallback. verify_package.py checks archive CRCs, executable shell permissions, LF line endings, required files, metadata syntax, exact private game data, public/source exclusions and SHA256 checksums.
-
-## Reproduce
-
-After building the host:
+The host and universal BYO ZIP compile without purchased game files. Build with
+`python tools/build.py --jdk "<installed JDK directory>"`, then run:
 
 ```sh
-python tools/verify_resolutions.py --java /path/to/java17/bin/java --jdk /path/to/jdk --game-jar /path/to/Ashworld/ashworld.dat
+python tools/verify_package.py
+bash tests/verify_display.sh
+python tests/verify_launcher.py
 ```
 
-Use the same test Java class with -Dashworld.testSave=true to enable original save/readback verification. Test output, profiles and decompilation stay in build and are excluded from all distributed archives. No test classes are included in ashworld-host.jar.
+Package checks verify the allowlisted files, host class boundary, licenses,
+metadata, LF endings, Unix ZIP permissions and generated PortMaster tree.
+Launcher tests use mock runtimes; no game files, real mounts or handheld are needed.
+Optional gameplay tests require your owned archive and a desktop Java 17 runtime;
+they never belong to the game-independent package build.
 
-## Hardware work still required
+Physical testing of this updated package is still needed on the target firmware.
+Use `testing_thread.txt` to record device, version, resolution and observed results.
 
-No physical RG34XX SP, R36S or other handheld was connected. Linux ARM64 graphics/native loading, audio, real button mapping, suspend/resume, long-session memory and stability need testing on each firmware/device. The original launcher allows a 1 GB Java heap; short tests with 256 MB do not establish memory needs across the whole game. No full campaign or all vehicle/mission paths were tested. 32-bit firmware and store/cloud features are unsupported by this package.
+## Recorded checks: 2026-09-12
+
+- JDK 26 compilation targeting Java 8 succeeded using only public libGDX compile dependencies and handwritten declarations.
+- Fresh source-only build without the purchased JAR/DAT or MewnBase data succeeded. Its final ZIP exactly matches this release.
+- Before the MewnBase input change, the declaration-based host classes matched reference compilation against the owned game classes byte for byte for all 12 ports.
+- Package boundary, metadata, license, LF and ZIP permission checks passed.
+- Display-helper checks passed for 640x480, 720x480, 720x720, 1024x768 and 1280x720, plus overrides and invalid inputs.
+- Nine launcher scenarios passed: missing data, success, game failure, invalid data, invalid resolution, wrong architecture, failed mount, firmware with mount replacement, and failed runtime download.
+- The current PortMaster-New `tools/build_release.py --do-check` passed for all 12 generated port trees, with no warnings or errors. This was a local check only.
+
+Archive: `Ashworld.zip`
+SHA-256: `656ea9b73a39e2d739332231bbe22299184baf2236828df998dcc6284cdcbcba`
+
+The source tree retains backups and previous private outputs only under ignored `build/`.
+Neither GitHub nor PortMaster received an upload from these checks.
+
+## gptokeyb2 verification
+
+All release launchers now require GPTOKEYB2 and real INI controls. Strict INI checks
+validate the root mapping and referenced states and reject legacy mappings.
+All 108 mocked launcher scenarios passed with only GPTOKEYB2 available.
+The rebuilt ZIPs match the game-data-free fixtures byte for byte. The official
+PortMaster checker passed for all twelve updated trees without warnings or errors.
+Mouse, text-entry and controller behavior still require physical handheld testing.
+Native Xbox 360 emulation is not enabled; see docs/CONTROLLERS.md.

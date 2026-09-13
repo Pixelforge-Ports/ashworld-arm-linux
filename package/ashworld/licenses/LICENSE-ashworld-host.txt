@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-This license covers the original launcher, control mapping, and documentation
-in this package. It does not grant rights to Ashworld game code, assets, or
-third-party runtimes and libraries, which keep their own licenses.
+Component: ashworld-host.jar and this project's Java host source.
+
+This MIT license covers the original adaptation only. It does not cover the
+owner-supplied game, artwork or third-party library implementations. Handwritten
+compile-only declarations are not included in the host JAR.

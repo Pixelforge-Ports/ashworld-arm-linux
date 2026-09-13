@@ -8,3 +8,14 @@ package/ashworld/resolution.txt
 package/ashworld/log.txt
 __pycache__/
 *.pyc
+
+# Generated/private content
+ports/
+build/
+dist/
+package/ashworld/ashworld.dat
+package/ashworld/runtime/*-host.jar
+package/ashworld/saves/
+package/ashworld/cache/
+package/ashworld/log.txt
+package/ashworld/resolution.txt

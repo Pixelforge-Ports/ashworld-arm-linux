@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <gameList>
   <game>
     <path>./Ashworld.sh</path>
-    <name>Ashworld (experimental)</name>
-    <desc>Experimental ARM64 Linux adaptation using the owner's unchanged Windows game JAR. Requires PortMaster, Java 17 and Westonpack. Physical handheld compatibility needs testing.</desc>
+    <name>Ashworld</name>
+    <desc>Survive a pixel-art wasteland, scavenge buildings, drive vehicles and fight its inhabitants.</desc>
+    <releasedate>20170919T000000</releasedate>
+    <developer>Orangepixel</developer>
+    <publisher>Orangepixel / THQ Nordic Mobile GmbH</publisher>
     <genre>Action</genre>
-    <players>1</players>
+    <image>./ashworld/screenshot.png</image>
   </game>
 </gameList>

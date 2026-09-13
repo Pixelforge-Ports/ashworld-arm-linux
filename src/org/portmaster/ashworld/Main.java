@@ -4,7 +4,6 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.backends.lwjgl3.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.glutils.HdpiMode;
-import com.orangepixel.ashworld.Globals;
 import com.orangepixel.ashworld.myCanvas;
 import com.orangepixel.plugins.Social;
 import java.lang.reflect.*;
@@ -96,7 +95,7 @@ public class Main extends myCanvas {
     }
     @Override public void render() {
         restoreDisplayBridge();
-        // Match this Windows build's own 60 FPS cap, not Gunslugs 1's 24 ms loop.
+        // Match this Windows build's original 60 FPS cap.
         long now = System.nanoTime();
         while (lastFrame != 0 && now - lastFrame < 16666667L) {
             java.util.concurrent.locks.LockSupport.parkNanos(16666667L - (now - lastFrame));

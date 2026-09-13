@@ -1,0 +1,9 @@
+{
+  "id": "ashworld",
+  "title": "Ashworld",
+  "script": "Ashworld.sh",
+  "zip": "Ashworld.zip",
+  "game_file": "ashworld.dat",
+  "mapping": "ashworld.ini",
+  "runtime_libraries": false
+}

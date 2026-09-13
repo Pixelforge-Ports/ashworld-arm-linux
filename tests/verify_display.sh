@@ -2,8 +2,8 @@
 # shellcheck source-path=SCRIPTDIR
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
-# shellcheck source=../package/ashworld/display.sh
-source package/ashworld/display.sh
+# shellcheck source=../package/ashworld/display.inc
+source package/ashworld/display.inc
 GAMEDIR="$(mktemp -d)"
 trap 'rmdir "$GAMEDIR"' EXIT
 for size in 640x480 720x480 720x720 1024x768 1280x720 960x544 320x240; do

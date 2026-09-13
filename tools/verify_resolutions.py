@@ -1,11 +1,18 @@
 """Run real game input tests at five display sizes using a local Java 17 runtime."""
-import argparse, os, shutil, struct, subprocess
+import argparse, os, shutil, struct, subprocess, zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--java',type=Path,required=True);p.add_argument('--jdk',type=Path,required=True);p.add_argument('--game-jar',type=Path,required=True);p.add_argument('--seed-saves',type=Path)
 a=p.parse_args();java=a.java.resolve();game=a.game_jar.resolve()
 classes=ROOT/'build/test-classes';classes.mkdir(parents=True,exist_ok=True)
-cp=os.pathsep.join(map(str,[ROOT/'build/compile-classpath',ROOT/'build/classes']))
+compile_cp=ROOT/'build/test-compile-classpath'
+compile_cp.mkdir(parents=True,exist_ok=True)
+with zipfile.ZipFile(game) as archive:
+ for entry in archive.infolist():
+  if entry.filename.endswith('.class'):
+   target=(compile_cp/entry.filename).resolve();target.relative_to(compile_cp.resolve())
+   target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(archive.read(entry))
+cp=os.pathsep.join(map(str,[ROOT/'package/ashworld/runtime/ashworld-host.jar',compile_cp]))
 subprocess.run([str(a.jdk.resolve()/'bin'/('javac.exe' if os.name=='nt' else 'javac')),'--release','8','-Xlint:-options','-cp',cp,'-d',str(classes),str(ROOT/'tests/GameplaySmoke.java')],check=True)
 cp=os.pathsep.join(map(str,[classes,ROOT/'package/ashworld/runtime/ashworld-host.jar',game]))
 for width,height in [(640,480),(720,480),(720,720),(1024,768),(1280,720)]:
